@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import authRoute from "./routes/auth.js"
 
 
 dotenv.config();
@@ -10,7 +11,10 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 
-app.use( express.json )
+app.use( express.json());
+app.use(cookieParser());
+
+app.use("/api/v1/auth",authRoute)
 
 mongoose.set( "strictQuery", false )
 
