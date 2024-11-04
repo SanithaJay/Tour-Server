@@ -46,7 +46,7 @@ export const restrict = ( roles ) => async ( req, res, next ) =>
         console.log("Role:",userRole);
         if ( !user )
         {
-            return res.status( 401 ).json( { succes: false, message: "User not found" } )
+            return res.status( 401 ).json( { success: false, message: "User not found" } )
         }
         
 
@@ -60,13 +60,13 @@ export const restrict = ( roles ) => async ( req, res, next ) =>
         }
         else
         {
-            return res.status( 401 ).json( { succes: false, message: "You don't have the permission to access this page" } );
+            return res.status( 403 ).json( { success: false, message: "You don't have the permission to access this page" } );
         }
 
     }
     catch ( error )
     {
         //console.log("erroorrr!!!!",error)
-        return res.status( 500 ).json( { succes: false, message: "Internal Server Error" } );
+        return res.status( 500 ).json( { success: false, message: "Internal Server Error" } );
     }
 }
