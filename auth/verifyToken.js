@@ -5,7 +5,7 @@ import User from "../models/UserSchema.js";
 export const authenticate = ( req, res, next ) =>
 {
     const authToken = req.headers.authorization;
-    console.log("token:",authToken)
+    //  console.log("token:",authToken)
 
     if ( !authToken || !authToken.startsWith( "Bearer" ) )
     {
@@ -14,8 +14,8 @@ export const authenticate = ( req, res, next ) =>
     }
     try
     {
-        const token = authToken.split(" ")[ 1 ];
-        console.log("token:",token)
+        const token = authToken.split( " " )[ 1 ];
+        // console.log("token:",token)
 
         const decoded = jwt.verify( token, process.env.JWT_SECRET_KEY );
         req.userId = decoded.id;
@@ -32,3 +32,41 @@ export const authenticate = ( req, res, next ) =>
         res.status( 401 ).json( { succes: false, message: "Invalid Token.Please login again" } )
     }
 };
+
+
+
+
+export const restrict = ( roles ) => async ( req, res, next ) =>
+{
+    try
+    {
+        const userId = req.userId;
+        const user = await User.findById( userId );
+        const userRole = user.role;
+        console.log("Role:",userRole);
+        if ( !user )
+        {
+            return res.status( 401 ).json( { succes: false, message: "User not found" } )
+        }
+        
+
+        if ( userRole === "user" && roles.includes( "user" ) )
+        {
+            next();
+        }
+        else if ( userRole === "admin" && roles.includes( "admin" ) )
+        {
+            next();
+        }
+        else
+        {
+            return res.status( 401 ).json( { succes: false, message: "You don't have the permission to access this page" } );
+        }
+
+    }
+    catch ( error )
+    {
+        //console.log("erroorrr!!!!",error)
+        return res.status( 500 ).json( { succes: false, message: "Internal Server Error" } );
+    }
+}

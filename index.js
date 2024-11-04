@@ -3,8 +3,9 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import authRoute from "./routes/auth.js"
-import user from"./routes/user.js"
+import authRoute from "./routes/auth.js";
+import user from "./routes/user.js";
+import tour from  "./routes/tour.js";
 
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/user",user);
+app.use("/api/v1/tour",tour);
 
 mongoose.set( "strictQuery", false )
 
