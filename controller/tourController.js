@@ -18,6 +18,7 @@ export const newTour = async ( req, res, next ) =>
             distance,
             price,
             maxGroupSize,
+            reviewCount:0,
             desc,
             photo,
             featured
@@ -83,12 +84,35 @@ export const deleteTour = async ( req, res, next ) =>
 
 
 
-export const getAllTour=async(req,res,next)=>{
-    try{
-    const tour=await Tour.find({});
-    return res.status(200).json({success:true,message:"Tours are listed",data:tour});
+export const getAllTour = async ( req, res, next ) =>
+{
+    try
+    {
+        const tour = await Tour.find( {} );
+        return res.status( 200 ).json( { success: true, message: "Tours are listed", data: tour } );
     }
-    catch(error){
-        return res.status(500).json({success:false,message:"Internal Server Error"});
+    catch ( error )
+    {
+        return res.status( 500 ).json( { success: false, message: "Internal Server Error" } );
     }
 }
+
+
+export const getSingleTour = async ( req, res, next ) =>
+{
+    const tourId = await Tour.find( {} );
+    try
+    {
+        const tour = await Tour.findById( tourId );
+        if ( !tour )
+        {
+            return res.status( 404 ).json( { success: false, message: "Tour not found" } )
+        }
+        return res.status(200).json({success:true,message:"Found Tour ",data:tour});
+    }
+    catch ( error )
+    {
+        return res.status( 500 ).json( { success: false, message: "Internal Server Error" } );
+    }
+
+};

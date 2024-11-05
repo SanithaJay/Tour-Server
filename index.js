@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import tourRoute from  "./routes/tour.js";
+import reviewRoute from "./routes/review.js";
 
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/tour",tourRoute);
+app.use("/api/v1/review",reviewRoute);
 
 mongoose.set( "strictQuery", false )
 

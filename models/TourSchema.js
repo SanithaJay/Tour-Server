@@ -28,6 +28,9 @@ const TourSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
+    reviewCount:{
+        type:Number,
+    },
     photo:{
         type:String,
         required:true,
