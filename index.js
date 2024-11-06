@@ -14,15 +14,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 
-app.use( express.json());
-app.use(cookieParser());
+mongoose.set( "strictQuery", false );
 
-app.use("/api/v1/auth",authRoute)
-app.use("/api/v1/user",userRoute);
-app.use("/api/v1/tour",tourRoute);
-app.use("/api/v1/review",reviewRoute);
 
-mongoose.set( "strictQuery", false )
 
 const dbConnect = async () =>
 {
@@ -36,6 +30,22 @@ const dbConnect = async () =>
         console.log( "DB Errorrr!!!!:", error )
     }
 };
+
+
+const coreOptions={
+    origin:true,
+    credentials:true,
+}
+
+app.use( express.json());
+app.use(cookieParser());
+app.use(cors(coreOptions));
+
+app.use("/api/v1/auth",authRoute)
+app.use("/api/v1/user",userRoute);
+app.use("/api/v1/tour",tourRoute);
+app.use("/api/v1/review",reviewRoute);
+
 
 
 dbConnect().then( () =>
