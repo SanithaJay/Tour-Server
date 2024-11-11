@@ -19,6 +19,7 @@ export const newTour = async ( req, res, next ) =>
             price,
             maxGroupSize,
             reviewCount:0,
+            reviewRating:0,
             desc,
             photo,
             featured

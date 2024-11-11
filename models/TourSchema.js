@@ -31,6 +31,9 @@ const TourSchema=new mongoose.Schema({
     reviewCount:{
         type:Number,
     },
+    reviewRating:{
+        type:Number,
+    },
     photo:{
         type:String,
         required:true,

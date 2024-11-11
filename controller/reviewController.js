@@ -14,12 +14,13 @@ export const createReview = async ( req, res, next ) =>
     const user = await User.findById( userId );
     const tour = await Tour.findById( tourId );
 
-
+console.log(user);
+console.log(tour);
     if ( !user )
     {
         res.status( 404 ).json( { success: false, message: "Please Login" } );
     }
-    if ( !Tour )
+    if ( !tour )
     {
 
         res.status( 404 ).json( { success: false, message: "tour package not exist" } );
@@ -40,7 +41,15 @@ export const createReview = async ( req, res, next ) =>
         } );
         await review.save();
         console.log( "ReviewCount:", tour.reviewCount );
+        
         tour.reviewCount = ( tour.reviewCount || 0 ) + 1;
+
+        const reviews = await Review.find({ "tour.id": tourId });
+        const totalStars = reviews.reduce((acc, review) => acc + review.star, 0);
+        const averageRating = totalStars / reviews.length;
+
+        tour.reviewRating = averageRating;
+       
         await tour.save();
 
         res.status( 200 ).json( { success: true, message: "Review Saved Successfully" } );
