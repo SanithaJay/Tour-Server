@@ -40,15 +40,19 @@ console.log(tour);
             }
         } );
         await review.save();
-        console.log( "ReviewCount:", tour.reviewCount );
+        
         
         tour.reviewCount = ( tour.reviewCount || 0 ) + 1;
 
         const reviews = await Review.find({ "tour.id": tourId });
         const totalStars = reviews.reduce((acc, review) => acc + review.star, 0);
-        const averageRating = totalStars / reviews.length;
+        const averageRating = (totalStars / reviews.length).toFixed(1);
 
         tour.reviewRating = averageRating;
+
+       /*  console.log("Total Star:",totalStars);
+        console.log( "ReviewCount:", tour.reviewCount );
+        console.log( "ReviewRating:", tour.reviewRating ); */
        
         await tour.save();
 
