@@ -7,6 +7,7 @@ import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import tourRoute from  "./routes/tour.js";
 import reviewRoute from "./routes/review.js";
+import subscribeRoute from "./routes/subscribe.js";
 
 
 dotenv.config();
@@ -45,6 +46,7 @@ app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/tour",tourRoute);
 app.use("/api/v1/review",reviewRoute);
+app.use("/api/v1/subscribe",subscribeRoute);
 
 
 
