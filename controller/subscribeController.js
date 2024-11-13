@@ -4,6 +4,7 @@ import Subscribe from "../models/SubscribeSchema.js"
 export const newSubscribe = async ( req, res, next ) =>
     {
         const { email} = req.body;
+        console.log("email",email);
         try
         {
             let subscribe = await Subscribe.findOne( { email: email } );

@@ -23,7 +23,7 @@ export const newUser = async ( req, res, next ) =>
         let user = await User.findOne( { email: email } );
         if ( user )
         {
-            return res.status( 400 ).json( { message: "User already exists" } );
+            return res.status( 400 ).json( { message: "Email Already Exists.Please Login." } );
         }
 
         const salt = await bcrypt.genSalt( 10 );
@@ -65,7 +65,7 @@ export const login = async ( req, res, next ) =>
 
         const token = generateToken( user );
         const { password, role, ...rest } = user._doc;
-        return res.status( 200 ).json( { succes: true, message: "Login Succesfull", token, data: { ...rest }, role } );
+        return res.status( 200 ).json( { success: true, message: "Login Succesfull", token, data: { ...rest }, role } );
     }
     catch ( error )
     {
