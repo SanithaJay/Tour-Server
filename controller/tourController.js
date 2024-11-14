@@ -117,3 +117,46 @@ export const getSingleTour = async ( req, res, next ) =>
     }
 
 };
+
+
+export const searchTours = async (req, res, next) => {
+    try {
+        // Extract search parameters from query string
+        const { city, distance, maxGroupSize } = req.query;
+
+        // Initialize an empty search object
+        let searchConditions = {};
+
+        // Add conditions based on the provided query parameters
+
+        // Filter by city if provided
+        if (city) {
+            searchConditions.city = { $regex: city, $options: "i" }; // Case-insensitive search
+        }
+
+        // Filter by distance if provided
+        if (distance) {
+            searchConditions.distance = { $lte: Number(distance) }; // Less than or equal to distance
+        }
+
+        // Filter by maxGroupSize if provided
+        if (maxGroupSize) {
+            searchConditions.maxGroupSize = { $gte: Number(maxGroupSize) }; // Greater than or equal to maxGroupSize
+        }
+
+        // Find the tours based on the constructed search conditions
+        const tours = await Tour.find(searchConditions);
+
+        // If no tours are found, return a 404 response
+        if (tours.length === 0) {
+            return res.status(404).json({ success: false, message: "No tours found with the given criteria" });
+        }
+
+        // Return the found tours
+        return res.status(200).json({ success: true, message: "Tours found", data: tours });
+
+    } catch (error) {
+        console.error("Error in searching tours:", error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+};
