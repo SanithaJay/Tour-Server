@@ -65,4 +65,17 @@ export const createReview = async ( req, res, next ) =>
     }
 }
 
+export const getAllReview = async ( req, res, next ) =>
+    {
+        try
+        {
+            const review = await Review.find( {} );
+            return res.status( 200 ).json( { success: true, message: "Reviews are listed", data: review } );
+        }
+        catch ( error )
+        {
+            return res.status( 500 ).json( { success: false, message: "Internal Server Error" } );
+        }
+    }
+
 
