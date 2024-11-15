@@ -18,12 +18,12 @@ export const createReview = async ( req, res, next ) =>
     //console.log( tour );
     if ( !user )
     {
-        res.status( 404 ).json( { success: false, message: "Please Login" } );
+       return res.status( 404 ).json( { success: false, message: "Please Login" } );
     }
     if ( !tour )
     {
 
-        res.status( 404 ).json( { success: false, message: "tour package not exist" } );
+      return  res.status( 404 ).json( { success: false, message: "tour package not exist" } );
     }
     try
     {

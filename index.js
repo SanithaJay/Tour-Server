@@ -8,6 +8,7 @@ import userRoute from "./routes/user.js";
 import tourRoute from  "./routes/tour.js";
 import reviewRoute from "./routes/review.js";
 import subscribeRoute from "./routes/subscribe.js";
+import booking from "./routes/booking.js";
 
 
 dotenv.config();
@@ -47,6 +48,7 @@ app.use("/api/v1/user",userRoute);
 app.use("/api/v1/tour",tourRoute);
 app.use("/api/v1/review",reviewRoute);
 app.use("/api/v1/subscribe",subscribeRoute);
+app.use("/api/v1/booking",booking);
 
 
 
