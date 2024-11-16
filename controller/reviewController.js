@@ -1,6 +1,7 @@
 import Review from "../models/ReviewSchema.js";
 import User from "../models/UserSchema.js";
 import Tour from "../models/TourSchema.js";
+import { request } from "express";
 
 export const createReview = async ( req, res, next ) =>
 {
@@ -77,5 +78,25 @@ export const getAllReview = async ( req, res, next ) =>
             return res.status( 500 ).json( { success: false, message: "Internal Server Error" } );
         }
     }
-
+    export const getTourReview= async ( req, res, next ) =>
+        {
+            const tourId = req.params.id;
+            console.log("tourid is",tourId)
+          //  const reviews = await Review.find( { "tour.id": tourId } );
+            try
+            {
+                const reviews = await Review.find({ "tour.id": tourId });
+                if ( !reviews)
+                {
+                    return res.status( 404 ).json( { success: false, message: "No reviews yet" } )
+                }
+                return res.status(200).json({success:true,message:"Found Tour ",data:reviews});
+            }
+            catch ( error )
+            {
+                console.log(error);
+                return res.status( 500 ).json( { success: false, message: "Internal Server Error" } );
+            }
+        
+        };
 
