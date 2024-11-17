@@ -101,10 +101,11 @@ export const getAllTour = async ( req, res, next ) =>
 
 export const getSingleTour = async ( req, res, next ) =>
 {
-    const tourId = await Tour.find( {} );
+    const tourId =req.params.id;
     try
     {
-        const tour = await Tour.findById( tourId );
+        const tour = await Tour.findById( tourId);
+        console.log(tour);
         if ( !tour )
         {
             return res.status( 404 ).json( { success: false, message: "Tour not found" } )
